@@ -13,7 +13,7 @@ static def deployToEnv(orgName, spaceName, appName = '') {
 
     echo "Calling cf push ${appName}"
     def pushNewCommand = "cf push -f ./modules/service/build/manifests/manifest.${spaceName}.yml"
-    executeCFCommand(orgName, spaceName, pushNewCommand)
+    JenkinsCommon.executeCFCommand(orgName, spaceName, pushNewCommand)
 }
 
 static def executeCFCommand(orgName, spaceName, command) {
