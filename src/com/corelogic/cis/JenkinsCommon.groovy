@@ -1,7 +1,7 @@
 package com.corelogic.cis
 class JenkinsCommon {
     
-static def deployToEnv(orgName, spaceName, appName = '') {
+static def deployToEnv(orgName, spaceName, appName = '', credentialsId) {
 
     spaceName = spaceName.toLowerCase()
 
@@ -9,14 +9,14 @@ static def deployToEnv(orgName, spaceName, appName = '') {
 
     echo "Calling cf delete ${appName}"
     def deleteOldCommand = "cf delete ${appName} -f"
-    executeCFCommand(orgName, spaceName, deleteOldCommand)
+    executeCFCommand(orgName, spaceName, deleteOldCommand, credentialsId)
 
     echo "Calling cf push ${appName}"
     def pushNewCommand = "cf push -f ./modules/service/build/manifests/manifest.${spaceName}.yml"
     JenkinsCommon.executeCFCommand(orgName, spaceName, pushNewCommand)
 }
 
-static def executeCFCommand(orgName, spaceName, command) {
+static def executeCFCommand(orgName, spaceName, command, credentialsId) {
     unstash 'build-artifacts'
     unstash 'cf-configs'
 
