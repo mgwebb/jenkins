@@ -32,9 +32,11 @@ class JenkinsCommon {
     }
 
     static def notifySlack(env) {
+        println("Env is a " + env.getClass().getName())
         try {
             slackSend(color: '#FFFF00', message: "BUILD/DEPLOY FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})", teamDomain: 'clgx-apptx', token: 'D4jxXWhwNF15AYH9NjVARJcA', channel: '#cis-app-build')
         } catch (e) {
+            println(e.getMessage())
             echo 'slack message failed'
         }
     }
