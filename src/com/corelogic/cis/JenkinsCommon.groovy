@@ -13,7 +13,7 @@ class JenkinsCommon {
 
         caller.echo "Calling cf push ${appName}"
         def pushNewCommand = "cf push -f ./modules/service/build/manifests/manifest.${spaceName}.yml"
-        executeCFCommand(caller, orgName, spaceName, pushNewCommand)
+        executeCFCommand(caller, orgName, spaceName, pushNewCommand, credentialsId)
     }
 
     def executeCFCommand(caller, orgName, spaceName, command, credentialsId) {
@@ -30,17 +30,7 @@ class JenkinsCommon {
               caller.sh command
         }
     }
-/*
-    def notifySlack(caller, env) {
-        caller.echo env.getClass().getName()
-        try {
-            caller.slackSend(color: '#FFFF00', message: "BUILD/DEPLOY FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})", teamDomain: 'clgx-apptx', token: 'D4jxXWhwNF15AYH9NjVARJcA', channel: '#cis-app-build')
-        } catch (e) {
-            caller.echo e.getMessage()
-            caller.echo 'slack message failed'
-        }
-    }
-  */  
+
     def notifySlack(caller) {
         try {
             caller.slackSend(color: '#FFFF00', message: "BUILD/DEPLOY FAILED: Job '${caller.env.JOB_NAME} [${caller.env.BUILD_NUMBER}]' (${caller.env.BUILD_URL})", teamDomain: 'clgx-apptx', token: 'D4jxXWhwNF15AYH9NjVARJcA', channel: '#cis-app-build')
