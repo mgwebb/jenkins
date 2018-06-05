@@ -5,13 +5,13 @@ class JenkinsCommon {
 
         spaceName = spaceName.toLowerCase()
 
-        echo "Deploying ${appName} on ${spaceName}"
+        caller.echo "Deploying ${appName} on ${spaceName}"
 
-        echo "Calling cf delete ${appName}"
+        caller.echo "Calling cf delete ${appName}"
         def deleteOldCommand = "cf delete ${appName} -f"
         executeCFCommand(orgName, spaceName, deleteOldCommand, credentialsId)
 
-        echo "Calling cf push ${appName}"
+        caller.echo "Calling cf push ${appName}"
         def pushNewCommand = "cf push -f ./modules/service/build/manifests/manifest.${spaceName}.yml"
         executeCFCommand(caller, orgName, spaceName, pushNewCommand)
     }
