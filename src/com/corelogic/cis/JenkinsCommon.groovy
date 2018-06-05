@@ -9,7 +9,7 @@ class JenkinsCommon {
 
         caller.echo "Calling cf delete ${appName}"
         def deleteOldCommand = "cf delete ${appName} -f"
-        executeCFCommand(orgName, spaceName, deleteOldCommand, credentialsId)
+        executeCFCommand(caller, orgName, spaceName, deleteOldCommand, credentialsId)
 
         caller.echo "Calling cf push ${appName}"
         def pushNewCommand = "cf push -f ./modules/service/build/manifests/manifest.${spaceName}.yml"
