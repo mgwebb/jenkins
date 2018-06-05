@@ -1,7 +1,7 @@
 package com.corelogic.cis
 class JenkinsCommon {
     
-    def deployToEnv(orgName, spaceName, appName = '', credentialsId) {
+    def deployToEnv(caller, orgName, spaceName, appName = '', credentialsId) {
 
         spaceName = spaceName.toLowerCase()
 
@@ -13,14 +13,14 @@ class JenkinsCommon {
 
         echo "Calling cf push ${appName}"
         def pushNewCommand = "cf push -f ./modules/service/build/manifests/manifest.${spaceName}.yml"
-        executeCFCommand(orgName, spaceName, pushNewCommand)
+        executeCFCommand(caller, orgName, spaceName, pushNewCommand)
     }
 
-    def executeCFCommand(orgName, spaceName, command, credentialsId) {
-        unstash 'build-artifacts'
-        unstash 'cf-configs'
+    def executeCFCommand(caller, orgName, spaceName, command, credentialsId) {
+        caller.unstash 'build-artifacts'
+        caller.unstash 'cf-configs'
 
-        wrap([$class                : 'CloudFoundryCliBuildWrapper',
+        caller.wrap([$class         : 'CloudFoundryCliBuildWrapper',
               apiEndpoint           : 'https://api.preprodapp.cf.corelogic.net',
               cloudFoundryCliVersion: 'CloudFoundryCLI',
               credentialsId         : credentialsId[spaceName],
