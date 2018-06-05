@@ -27,7 +27,7 @@ class JenkinsCommon {
               organization          : orgName,
               space                 : spaceName]) {
 
-            sh command
+              caller.sh command
         }
     }
 /*
