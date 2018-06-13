@@ -1,0 +1,4 @@
+class Globals {
+    String buildNumber = System.getenv('BUILD_NUMBER').toString()
+    String branchName = System.getenv('BRANCH_NAME').toString()
+}
