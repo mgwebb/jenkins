@@ -1,4 +1,9 @@
-class Globals {
-    String buildNumber = System.getenv('BUILD_NUMBER').toString()
-    String branchName = System.getenv('BRANCH_NAME').toString()
+// Define methods as usual
+def commonMethod1() {
+    println 'Hello from commonMethod1'
+}
+
+// Export methods by turning them into closures
+ext {
+    commonMethod1 = this.&commonMethod1
 }
